@@ -1,0 +1,513 @@
+﻿$(document).ready(function () {
+    //초기화
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    //Common Section Browser Full
+    function sectionObjFullSize() {
+        var windowHT = $(window).height();
+        $('section').height(windowHT);
+    }
+    //Common Object Browser Full
+    function objFullSize() {
+        var windowHT = $(window).height();
+        $('.videoBanner').height(windowHT);
+        $('.imgBanner').height(windowHT);
+        $('.imgBanner .bgMotion').height(windowHT);
+        $('.introBrand .infoSecond').height(windowHT);
+        $('.introBrand .infoThird .swiper-slide').height(windowHT);
+    }
+    sectionObjFullSize();
+    objFullSize();
+    $(window).resize(function () {
+        location.reload();//초기화
+        sectionObjFullSize();
+        objFullSize();
+    });
+    //Scroll Motion Stop/Play Common
+    function scrollDisable() {
+        $('body').addClass('scrollDisable').on('scroll touchmove mousewheel', function (e) {
+            e.preventDefault();
+        });
+    }
+    function scrollAble() {
+        $('body').removeClass('scrollDisable').off('scroll touchmove mousewheel');
+    }
+    var startY, endY;
+    //Main Banner - VideoType(PC)
+    $('.videoBanner').on('mousewheel', function (event, delta) {
+        scrollDisable();
+        if (delta > 0) {//휠 위로올림
+            $('html, body').animate({ scrollTop: 0 });
+            $(this).find('video').get(0).play();
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $(this).stop().animate({ 'left': '-100%' });
+            $('.imgBanner').stop().animate({ 'right': 0 });
+            $('.imgBanner').addClass('isFocus');
+            $(this).find('video').get(0).pause();
+            scrollDisable();
+        }
+    });
+    //Main Banner - VideoType(Mobile)
+    $('.videoBanner').on('touchstart', function (event) {
+        startY = event.originalEvent.changedTouches[0].screenY;
+    });
+    $('.videoBanner').on('touchend', function (event) {
+        endY = event.originalEvent.changedTouches[0].screenY;
+        if (endY - startY > 50) {//터치모션 위로 올라감
+            $('html, body').animate({ scrollTop: 0 });
+            $(this).find('video').get(0).play();
+            scrollDisable();
+        } else if (startY - endY > 50) {//터치모션 밑으로 내려감
+            $(this).stop().animate({ 'left': '-100%' });
+            $('.imgBanner').stop().animate({ 'right': 0 });
+            $('.imgBanner').addClass('isFocus');
+            $(this).find('video').get(0).pause();
+            scrollDisable();
+        }
+    });
+    //Main Banner - ImageType(PC)
+    $('.imgBanner').on(' mousewheel', function (event, delta) {
+        if (delta > 0 && $(window).width() > 720) {//휠 위로올림
+            $(this).stop().animate({ 'right': '-100%' });
+            $('.videoBanner').stop().animate({ 'left': 0 });
+            $('html, body').animate({ scrollTop: 0 });
+            $(this).removeClass('isFocus');
+            $('.videoBanner').find('video').get(0).play();
+            scrollDisable();
+        } else if (delta < 1 && $(window).width() > 720) {//휠 아래로 내림
+            $(this).stop().animate({ 'right': 0 });
+            $('.videoBanner').stop().animate({ 'left': '-100%' });
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').next('section').offset().top })
+            $('.videoBanner').find('video').get(0).pause();
+            $(this).removeClass('isFocus');
+            //소개 첫화면
+            $('.infoFirst').addClass('isFocus');
+            $('.infoFirst').removeClass('isFocusOut');
+            $('.infoFirst').css('z-index', 9);
+            //소개 두번째화면
+            $('.infoSecond').removeClass('isFocus');
+            $('.infoSecond').removeClass('isFocusOut');
+            $('.infoSecond').css('z-index', 8);
+            //소개 세번째화면
+            $('.infoThird').css('z-index', 7);
+            $('.infoThird').removeClass('isFocus');
+            $('.infoThird').removeClass('isFocusOut');
+        }
+    });
+    //Main Banner - ImageType(MO)
+    $('.imgBanner').on('touchstart', function (event) {
+        startY = event.originalEvent.changedTouches[0].screenY;
+    });
+    $('.imgBanner').on('touchend', function (event) {
+        endY = event.originalEvent.changedTouches[0].screenY;
+        if (endY - startY > 50) {//터치모션 위로 올라감
+            $('html, body').animate({ scrollTop: 0 });
+            scrollDisable();
+        } else if (startY - endY > 50) {//터치모션 밑으로 내려감
+            $('.infoFirst').addClass('isFocus');
+            $('.infoFirst').removeClass('isFocusOut');
+            $('.infoFirst').css('z-index', 9);
+            //소개 두번째화면
+            $('.infoSecond').removeClass('isFocus');
+            $('.infoSecond').removeClass('isFocusOut');
+            $('.infoSecond').css('z-index', 8);
+            //소개 세번째화면
+            $('.infoThird').css('z-index', 7);
+            $('.infoThird').removeClass('isFocus');
+            $('.infoThird').removeClass('isFocusOut');
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').next('section').offset().top });
+            scrollDisable();
+        }
+    });
+    /*Intro Brand(PC)*/
+    //소개 첫화면(PC)
+    $('.infoFirst').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').prev('section').offset().top });
+            $('.imgBanner').addClass('isFocus');
+            //첫화면
+            $('.infoFirst').css('z-index', 9);
+            $('.infoFirst').removeClass('isFocus');
+            $('.infoFirst').removeClass('isFocusOut');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('.infoFirst').removeClass('isFocus');
+            $('.infoFirst').addClass('isFocusOut');
+            setTimeout(function () {
+                //첫화면
+                $('.infoFirst').css('z-index', 7);
+                $('.infoFirst').removeClass('isFocus');
+                $('.infoFirst').removeClass('isFocusOut');
+                //두번째화면
+                $('.infoSecond').css('z-index', 9);
+                $('.infoSecond').addClass('isFocus');
+                $('.infoSecond').removeClass('isFocusOut');
+                //세번째화면
+                $('.infoThird').css('z-index', 8);
+                $('.infoThird').addClass('isFocus');
+                $('.infoThird').removeClass('isFocusOut');
+            }, 1000);
+            scrollDisable();
+        }
+    });
+    //소개 두번째화면(PC)
+    $('.infoSecond').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            //첫번째 화면
+            $('.infoFirst').css('z-index', 9);
+            $('.infoFirst').addClass('isFocus');
+            $('.infoFirst').removeClass('isFocusOut');
+            //두번째화면
+            $('.infoSecond').css('z-index', 8);
+            $('.infoSecond').removeClass('isFocus');
+            $('.infoSecond').removeClass('isFocusOut');
+            //세번째화면
+            $('.infoThird').css('z-index', 7);
+            $('.infoThird').removeClass('isFocus');
+            $('.infoThird').removeClass('isFocusOut');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('.infoSecond').removeClass('isFocus');
+            $('.infoSecond').addClass('isFocusOut');
+            //첫화면
+            $('.infoFirst').css('z-index', 7);
+            //두번째화면
+            $('.infoSecond').css('z-index', 8);
+            $('.infoSecond').removeClass('isFocus');
+            //세번째화면
+            $('.infoThird').css('z-index', 9);
+            $('.infoThird').removeClass('isFocus');
+            $('.infoThird').addClass('isFocusOut');
+            //세번째화면 - 슬라이드
+            $('.infoThird .slide_fake1').css('z-index', 2);
+            $('.infoThird .slide_fake2').css('z-index', 1);
+            $('.infoThird .slide_fake3').css('z-index', 1);
+            $('.infoThird .slide_fake4').css('z-index', 1);
+            $('.infoThird .blank a.clickObj').hide();
+            $('.infoThird .slide_fake1 a.clickObj').show();
+            scrollDisable();
+        }
+    });
+    //소개 세번째화면(PC) - 첫 슬라이드
+    $('.infoThird .slide_fake1').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            //두번째화면
+            $('.infoSecond').addClass('isFocus');
+            $('.infoSecond').removeClass('isFocusOut');
+            //세번째화면
+            $('.infoThird').addClass('isFocus');
+            $('.infoThird').removeClass('isFocusOut');
+            setTimeout(function () {
+                $('.infoFirst').css('z-index', 7);
+                $('.infoSecond').css('z-index', 9);
+                $('.infoThird').css('z-index', 8);
+            },1000);
+            //세번째화면 - 슬라이드
+            $('.infoThird .slide_fake1').css('z-index', 1);
+            $('.infoThird .slide_fake2').css('z-index', 1);
+            $('.infoThird .slide_fake3').css('z-index', 1);
+            $('.infoThird .slide_fake4').css('z-index', 1);
+            $('.infoThird .blank a.clickObj').hide();
+            //Slide Trigger
+            $('.infoThird button.prev').trigger('click');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            //Slide Trigger
+            $('.infoThird button.next').trigger('click');
+            //세번째화면 - 슬라이드
+            $('.infoThird .slide_fake1').css('z-index', 1);
+            $('.infoThird .slide_fake2').css('z-index', 2);
+            $('.infoThird .slide_fake3').css('z-index', 1);
+            $('.infoThird .slide_fake4').css('z-index', 1);
+            $('.infoThird .blank a.clickObj').hide();
+            $('.infoThird .slide_fake2 a.clickObj').show();
+            scrollDisable();
+        }
+    });
+    //소개 세번째화면(PC) - 두번째 슬라이드
+    $('.infoThird .slide_fake2').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            //Slide Trigger
+            $('.infoThird button.prev').trigger('click');
+            //세번째화면 - 슬라이드
+            $('.infoThird .slide_fake1').css('z-index', 2);
+            $('.infoThird .slide_fake2').css('z-index', 1);
+            $('.infoThird .slide_fake3').css('z-index', 1);
+            $('.infoThird .slide_fake4').css('z-index', 1);
+            $('.infoThird .blank a.clickObj').hide();
+            $('.infoThird .slide_fake1 a.clickObj').show();
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            //Slide Trigger
+            $('.infoThird button.next').trigger('click');
+            //세번째화면 - 슬라이드
+            $('.infoThird .slide_fake1').css('z-index', 1);
+            $('.infoThird .slide_fake2').css('z-index', 1);
+            $('.infoThird .slide_fake3').css('z-index', 2);
+            $('.infoThird .slide_fake4').css('z-index', 1);
+            $('.infoThird .blank a.clickObj').hide();
+            $('.infoThird .slide_fake3 a.clickObj').show();
+            scrollDisable();
+        }
+    });
+    //소개 세번째화면(PC) - 세번째 슬라이드
+    $('.infoThird .slide_fake3').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            //Slide Trigger
+            $('.infoThird button.prev').trigger('click');
+            //세번째화면 - 슬라이드
+            $('.infoThird .slide_fake1').css('z-index', 1);
+            $('.infoThird .slide_fake2').css('z-index', 2);
+            $('.infoThird .slide_fake3').css('z-index', 1);
+            $('.infoThird .slide_fake4').css('z-index', 1);
+            $('.infoThird .blank a.clickObj').hide();
+            $('.infoThird .slide_fake2 a.clickObj').show();
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            //Slide Trigger
+            $('.infoThird button.next').trigger('click');
+            //세번째화면 - 슬라이드
+            $('.infoThird .blank .clickObj').css('opacity', 0);
+            $('.infoThird .slide_fake1').css('z-index', 1);
+            $('.infoThird .slide_fake2').css('z-index', 1);
+            $('.infoThird .slide_fake3').css('z-index', 1);
+            $('.infoThird .slide_fake4').css('z-index', 2);
+            $('.infoThird .blank a.clickObj').hide();
+            $('.infoThird .slide_fake4 a.clickObj').show();
+            scrollDisable();
+        }
+    });
+    //소개 세번째화면(PC) - 네번째 슬라이드
+    $('.infoThird .slide_fake4').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            //Slide Trigger
+            $('.infoThird button.prev').trigger('click');
+            //세번째화면 - 슬라이드
+            $('.infoThird .slide_fake1').css('z-index', 1);
+            $('.infoThird .slide_fake2').css('z-index', 1);
+            $('.infoThird .slide_fake3').css('z-index', 2);
+            $('.infoThird .slide_fake4').css('z-index', 1);
+            $('.infoThird .blank a.clickObj').hide();
+            $('.infoThird .slide_fake3 a.clickObj').show();
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').next('section').offset().top });
+            scrollDisable();
+        }
+    });
+    var swiper = new Swiper(".infoSlideWrap", {
+        slidesPerView: 1.5,
+        spaceBetween: 40,
+        speed: 1000,
+        centeredSlides: true,
+        mousewheel: true,
+        loop: false,
+        navigation: {
+            nextEl: '.infoThird button.next',
+            prevEl: '.infoThird button.prev',
+        },
+        breakpoints: {
+            720: {
+                slidesPerView: 2.5,
+                spaceBetween: 40,
+            },
+        },
+    });
+    function slideClickObj() {
+        var objSize = $('.infoSlideWrap .swiper-slide').outerWidth();
+        $('.introBrand .infoThird .blank .clickObj').css('width', objSize)
+    }
+    slideClickObj();
+    /*Intro Brand(MO)*/
+    $('.infoFirst').on('touchstart', function (event) {
+        startY = event.originalEvent.changedTouches[0].screenY;
+    });
+    $('.infoFirst').on('touchend', function (event) {
+        endY = event.originalEvent.changedTouches[0].screenY;
+        if (endY - startY > 50) {//터치모션 위로 올라감
+            $('html, body').animate({ scrollTop: 0 });
+            scrollDisable();
+        } else if (startY - endY > 50) {//터치모션 밑으로 내려감
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').next('section').offset().top });
+            scrollDisable();
+        }
+    });
+
+
+
+
+    /*Service*/
+    //Service 첫번째슬라이드 포커스
+    $('.service .slide_fake1').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').prev('section').offset().top });
+            $('.service').removeClass('on');
+            $('.service .serviceWrapper li').eq(0).removeClass('isFocus');
+            $('.service .serviceWrapper li').eq(1).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).removeClass('isFocus');
+            $('.service .serviceWrapper li').eq(2).removeClass('isFocus');
+            $('.service .serviceWrapper li').eq(3).removeClass('isFocus');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '1');
+            $('.service.on .slide_fake3').css('z-index' , '1');
+            $('.service.on .slide_fake4').css('z-index' , '1');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            //Slide Trigger
+            $('.service').addClass('on');
+            $('.service .serviceWrapper li').eq(0).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '2');
+            $('.service.on .slide_fake3').css('z-index' , '1');
+            $('.service.on .slide_fake4').css('z-index' , '1');
+            scrollDisable();
+        }
+    });
+    //Service 두번째슬라이드 포커스
+    $('.service .slide_fake2').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('.service .serviceWrapper li').eq(0).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(0).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '2');
+            $('.service.on .slide_fake2').css('z-index' , '1');
+            $('.service.on .slide_fake3').css('z-index' , '1');
+            $('.service.on .slide_fake4').css('z-index' , '1');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('.service .serviceWrapper li').eq(0).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(1).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '1');
+            $('.service.on .slide_fake3').css('z-index' , '2');
+            $('.service.on .slide_fake4').css('z-index' , '1');
+            scrollDisable();
+        }
+    });
+    //Service 세번째슬라이드 포커스
+    $('.service .slide_fake3').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('.service .serviceWrapper li').eq(0).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '2');
+            $('.service.on .slide_fake3').css('z-index' , '1');
+            $('.service.on .slide_fake4').css('z-index' , '1');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('.service .serviceWrapper li').eq(0).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(2).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '1');
+            $('.service.on .slide_fake3').css('z-index' , '1');
+            $('.service.on .slide_fake4').css('z-index' , '2');
+            scrollDisable();
+        }
+    });
+    //Service 네번째슬라이드 포커스
+    $('.service .slide_fake4').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('.service .serviceWrapper li').eq(0).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(2).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '1');
+            $('.service.on .slide_fake3').css('z-index' , '2');
+            $('.service.on .slide_fake4').css('z-index' , '1');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('.service .serviceWrapper li').eq(0).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(3).removeClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '1');
+            $('.service.on .slide_fake3').css('z-index' , '1');
+            $('.service.on .slide_fake4').css('z-index' , '1');
+            $('.service.on .slide_fake5').css('z-index' , '2');
+        }
+    });
+    //Service 다섯번째슬라이드 포커스
+    $('.service .slide_fake5').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('.service .serviceWrapper li').eq(0).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(1).addClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(2).addClass('isFocus');
+            $('.service .serviceWrapper li').eq(2).removeClass('isFocusOut');
+            $('.service .serviceWrapper li').eq(3).addClass('isFocusOut');
+            $('.service.on .slide_fake1').css('z-index' , '1');
+            $('.service.on .slide_fake2').css('z-index' , '1');
+            $('.service.on .slide_fake3').css('z-index' , '1');
+            $('.service.on .slide_fake4').css('z-index' , '2');
+            $('.service.on .slide_fake5').css('z-index' , '1');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').next('section').offset().top });
+            scrollDisable();
+        }
+    });
+    var swiper1 = new Swiper(".serviceWrapper", {
+        slidesPerView: 4,
+        loop: false,
+        mousewheel: true,
+    }); 
+
+    //Interview
+    $('.interview article').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').prev('section').offset().top });
+            scrollDisable();
+            $('.interview .interviewContent').removeClass('isFocus');
+        } else if (delta < 1) {//휠 아래로 내림
+            $('.interview .interviewContent').addClass('isFocus');
+            scrollDisable();
+        }
+    });
+    $('.interview .interviewContent').on(' mousewheel', function (event, delta) {
+        if (delta > 0) {//휠 위로올림
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').prev('section').offset().top });
+            $('.interview .interviewContent').removeClass('isFocus');
+            scrollDisable();
+        } else if (delta < 1) {//휠 아래로 내림
+            $('html, body').stop().animate({ scrollTop: $(this).parents('section').next('section').offset().top });
+            scrollDisable();
+        }
+    });
+
+    //Mobile
+    function Mobile(){
+        if($(window).width() < 720){
+            //Intro Brand
+            var betterWD = $('.introBrand .infoFirst div.better').outerWidth();
+            var stepWD = $('.introBrand .infoFirst div.step').outerWidth();
+            $('.introBrand .infoFirst').css({'width' : betterWD + stepWD});
+            //Service
+            $('.service').removeClass('on');
+        }
+    }
+    Mobile();
+    $(window).resize(function(){
+        Mobile();
+    })
+
+
+});

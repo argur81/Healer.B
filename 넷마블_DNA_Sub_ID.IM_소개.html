@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>Healer.B</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/rem.css" />
+    <link rel="stylesheet" type="text/css" href="css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="css/common.css" />
+    <link rel="stylesheet" type="text/css" href="css/sub.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.mousewheel.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+</head>
+<style>
+    .container {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+    }
+
+    .test::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 50px;
+        background-color: orange;
+    }
+
+    .card {
+        width: 200px;
+        height: 50px;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: 0.7s;
+    }
+
+    .face {
+        opacity: 0.5;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    .front {
+        background: red;
+    }
+
+    .back {
+        transform: rotateX(180deg);
+        background: green;
+    }
+
+    /* .container:hover .card {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotateX(180deg);
+  -ms-transform: rotateX(180deg);
+  -o-transform: rotateX(180deg);
+  transform: rotateX(180deg);
+  transition: 0.7s;
+} */
+
+    .fixArea {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: fixed;
+        z-index: 1;
+    }
+
+    .horizontal-pin .pin-spacer {
+        height: 100vh !important
+    }
+
+    .horizontal-pin .pin-spacer.tt {
+        height: 100vh !important;
+        background-color: beige;
+    }
+
+    .horizontal-pin .pl_one {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .horizontal-pin .pl_one .marquee h4 {
+        flex-shrink: 0;
+    }
+
+    .horizontal-pin .pl_one .marquee-track {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .horizontal-pin .pl_one .marquee-track h4 {
+        font-size: 14px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .horizontal-pin .pl_one .marquee-track.r h4 {
+        color: #f9f9f9;
+        text-shadow: -1px 0 #868686, 0 1px #868686, 1px 0 #868686, 0 -1px #868686;
+    }
+
+    .horizontal-pin .pl_two {
+        background: #121111;
+    }
+
+    .horizontal-pin .pin_two {
+        /*background:green;*/
+        width: 81.8%;
+        height: 100vh;
+        margin: 0 6.6%;
+        padding: 3.5% 0;
+    }
+
+    .horizontal-pin .pin_two h4 {
+        font-size: 7.2vw;
+        letter-spacing: -0.03rem;
+        font-family: 'Montserrat';
+        color: #f9f9f9;
+        margin-bottom: 2.6vw;
+    }
+
+    .horizontal-pin .pin_two .cont li .pin_text {
+        padding: 1vw 0;
+        color: #f9f9f9;
+        font-size: 1.4rem;
+    }
+</style>
+
+<body>
+    <div class="fixArea">
+        <span class="reload" style="display:block;width:200px;line-height:50px;background:orange">&nbsp;</span>
+    </div>
+    <div class="section horizontal-pin">
+        <div class="container">
+
+        </div>
+        <div class="horizontal-panel pl_one test1">
+            <div class="pin_one">
+                <div class="section marquee" style="background:beige;height:100vh;">
+                    <div class="marquee-track l"
+                        style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);">
+                        <h4>test1</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="horizontal-panel pl_one section2">
+            <div class="pin_one">
+                <div class="section marquee" style="background:pink;height:100vh;position:relative">
+                    <div class="marquee-track l">
+                        <h4>넷마블</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="horizontal-panel pl_two" id="javascript_sec2">
+            <div class="pin_two">
+                <h4>qe</h4>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        const pin_panels = gsap.utils.toArray('.horizontal-pin .horizontal-panel');
+        pin_panels.forEach((panel, i) => {
+            ScrollTrigger.create({
+                trigger: panel,
+                pin: true,
+                pinSpacing: false,
+                start: 'top top'
+            });
+        });
+    
+        var offsetBottom = $('.test1').offset().top + $('.test1').outerHeight();
+        var windowPos = $(window).height + $(window).scrollTop()
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > offsetBottom / 2) {
+                $('.reload').css({ 'transform': "rotateX(" + window.pageYOffset / 2 + "deg)" })
+            }
+            if ($(window).scrollTop() > offsetBottom) {
+                console.log('55')
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>
