@@ -1,0 +1,104 @@
+/* Common */
+.date{font-size:16px;color:#767676}
+/*Common(paging)*/
+.pagination{padding-top: 80px; text-align: center;}
+.pagination ul>li{display: inline-block;height: 40px;padding: 0 20px;}
+.pagination ul>li:first-child{padding-left: 0;}
+.pagination ul>li:last-child{padding-right: 0;}
+.pagination ul>li.mo{display: none;}
+.pagination ul>li>a{display: inline-block; line-height: 2;width: 20px;color: #767676;font-size: 18px;}
+/*Common(CommonBoardList)*/
+.commBoardList table{border-top:1px solid #101010;width: 100%;}
+.commBoardList table tr{display: flex;justify-content: space-between; padding: 45px 35px; border-bottom:1px solid #e0e0e0;height:105px;}
+.commBoardList table .notice{position: relative;padding-left: 120px;}
+.commBoardList table .notice .noti{color: #fff; text-align: center; width: 60px; line-height: 30px; background-color: #5143d4;position: absolute;top: 50%;left: 3%;transform: translateY(-50%);}
+.commBoardList table td.tit{text-align:left}
+.commBoardList table td.tit a{display:inline-block;line-height: 1; font-size: 18px;}
+.commBoardList table td.tit a:hover{border-bottom:1px solid #101010}
+.commBoardList table td.date{font-size:16px;color:#767676}
+.commBoardList table tr.notice .tit{font-weight:500}
+/* Common(listBoard) */
+.listBoard dl{margin-bottom: 120px;}
+.listBoard dt{position: relative;}
+.listBoard .layout3 dt a{max-width: 400px;}
+.listBoard .layout2 dt img{width: 100%;}
+.listBoard .listBox dt a{display: inline-block;overflow: hidden;}
+.listBoard .listBox dt a.endEvent>div{width: 100%; background: rgba(0,0,0,0.8);height: 100%; position: absolute;z-index: 99;color: #fff;text-align: center;padding: 29% 0; font-size: 28px;}
+.listBoard dt img{transition-duration: 0.5s;width: 100%;}
+.listBoard dd{text-align: left;}
+.listBoard dd br.mo{display: none;}
+.listBoard .label{display: inline-block; font-size: 16px; color: #5143d4; margin-top: 35px; font-weight: 500;}
+.listBoard h5.tit{font-size: 24px; color: #101010; font-weight: 500;margin-top: 25px; margin-bottom: 30px;line-height: 1.4;}
+.listBoard .date{font-size:16px;color:#767676}
+.listBoard .listBox{display: flex;flex-wrap: wrap;justify-content: space-between;}
+.listBoard .more{width: 100%; margin: 0 auto; text-align: center;height: 50px;}
+.listBoard .more a{display: inline-block; line-height: 1.5;font-weight: 500;color: #101010; font-size: 18px;}
+.listBoard .more:hover a{border-bottom: 2px solid #5143d4;}
+.listBoard dt a:hover h5 a{border-bottom: 1px solid #101010;}
+.listBoard .term{display: inline; font-size: 16px; color: #101010; padding-right: 15px;}
+.listBoard .dday{font-size: 16px; color: #ff3e3e;padding-left: 15px; font-weight: 500;}
+/*이벤트,공지사항*/
+.EventNNotice.sub .subTab{width:100%;text-align:center}
+/* 넷마블_DNA_Sub_이벤트,공지_공지사항02 */
+.notice_blank ul{display: flex;flex-direction: column;align-items: center;padding: 70px 0 180px 0}
+.notice_blank ul>li:last-child{padding-top: 40px; font-size: 18px; color: #101010;}
+@media (hover: hover) {
+    /*Common(paging)*/
+    .pagination ul>li:hover .num{color: #101010; border-bottom: 2px solid #101010;font-weight: 500;}
+    /* Common(listBoard) */
+    .listBoard dl:hover img{transform: scale(1.2); transition: all 0.5s;}
+    .listBoard dl:hover a.endEvent>img{transform: none;}
+    .listBoard dd a:hover{border-bottom: 1px solid #101010;}
+}
+
+
+
+@media (max-width :1280px){
+    .listBoard .listBox{display: flex; flex-wrap: wrap;justify-content: space-between;}
+    .listBoard .layout3 dl{width: 32.3%;}
+    .listBoard .layout2 dl{width: 49%;}
+}
+
+@media (max-width :720px){
+    /*Common(paging)*/
+    .pagination ul>li{padding:0 1rem}
+    .pagination ul>li.mo{display:inline-block;}
+    .pagination ul>li>a{font-size:2rem;width:2.5rem}
+    /*Common(CommonBoardList)*/
+    article.commBoardList{padding: 0 4rem;}
+    .commBoardList table colgroup{display:none}
+    .commBoardList table tr{flex-direction: column; height:18rem;position:relative;padding:5.5rem 1rem}
+    .commBoardList table .notice{padding-left: 16rem;}
+    .commBoardList table .notice .noti{top: 40%;width: 11rem; height: 5rem; font-size: 2.3rem;line-height: 5rem;}
+    .commBoardList table td{display:block;width:100%;border:none;height:auto;text-align:left}
+    .commBoardList table td.tit a{font-size:2.8rem}
+    .commBoardList table td.date{font-size:2.4rem}
+    .commBoardList table td.tit a:hover{border-bottom:none}
+     /* Common(listBoard) */
+    .listBoard article{padding: 0 4rem;}
+    .listBoard dt a{width: 100%; max-width: 80rem !important;display: block;}
+    .listBoard dl{width: 100%;}
+    .listBoard .listBox dl{width: 100%;}
+    .listBoard dt img{width: 100%;}
+    .listBoard dd br.mo{display: block;}
+    .listBoard dd br.pc{display: none;}
+    .listBoard .label{font-size: 2.4rem; margin-top: 4rem;}
+    .listBoard h5.tit{font-size: 3.4rem;margin-top: 3rem; margin-bottom: 6rem;}
+    .listBoard .date{font-size:2.4rem;}
+    .listBoard .listBox{flex-direction: column; align-items: center;}
+    .listBoard .more a{font-size: 2.8rem;}
+    /*이벤트,공지_공지사항*/
+    .EventNNotice .subTab{text-align:center}
+    /*이벤트,공지_공지사항(No Data)*/
+    .notice_blank ul{padding:15rem 0 39.5rem 0}
+    .notice_blank ul>li>img{width:9.5rem}
+    .notice_blank ul>li:last-child{font-size:2.8rem}
+    /*이벤트,공지_공지사항(Detail)*/
+    .noticePost article{padding: 0 40px;}
+    .noticePost .commonBoardView th{padding: 100px 0;}
+    .noticePost .commonBoardView th .name{font-size:4.4rem;line-height: 1.5; padding-bottom:6.5rem}
+    .noticePost .commonBoardView th .date{font-size: 2.4rem;}
+    .noticePost .commonBoardView td{padding:80px 0}
+    .noticePost .commonBoardView .text{font-size:2.4rem;}
+    .noticePost .btn a.list{line-height:8rem;font-size:2.4rem;margin-top: 10rem;}
+}
